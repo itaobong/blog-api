@@ -281,6 +281,76 @@ To run tests (when implemented):
 npm test
 ```
 
+## Testing with Postman
+
+You can test the API endpoints using Postman. Here's how to get started:
+
+1. Download and install [Postman](https://www.postman.com/downloads/)
+2. Import the provided Postman collection (if available) or create a new collection
+3. Set up environment variables in Postman:
+   - `BASE_URL`: `http://localhost:3000/api`
+   - `TOKEN`: Your JWT token after login
+
+### Example Requests
+
+1. Register a new user:
+   ```http
+   POST {{BASE_URL}}/auth/register
+   Content-Type: application/json
+
+   {
+     "username": "testuser",
+     "email": "test@example.com",
+     "password": "password123"
+   }
+   ```
+
+2. Login:
+   ```http
+   POST {{BASE_URL}}/auth/login
+   Content-Type: application/json
+
+   {
+     "email": "test@example.com",
+     "password": "password123"
+   }
+   ```
+   - After successful login, copy the token from the response and set it as the `TOKEN` environment variable in Postman
+
+3. Create a blog post (requires authentication):
+   ```http
+   POST {{BASE_URL}}/posts
+   Authorization: Bearer {{TOKEN}}
+   Content-Type: application/json
+
+   {
+     "title": "My First Blog Post",
+     "content": "This is the content of my first blog post!"
+   }
+   ```
+
+4. Get all posts:
+   ```http
+   GET {{BASE_URL}}/posts
+   ```
+
+5. Add a comment (requires authentication):
+   ```http
+   POST {{BASE_URL}}/posts/:postId/comments
+   Authorization: Bearer {{TOKEN}}
+   Content-Type: application/json
+
+   {
+     "content": "Great post!"
+   }
+   ```
+
+### Testing Tips
+1. Keep the token from the login response
+2. Use the token in the Authorization header for protected routes
+3. Test error cases by sending invalid data
+4. Check response status codes and error messages
+
 ## Deployment
 
 1. Build the project:
