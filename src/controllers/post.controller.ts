@@ -2,6 +2,17 @@ import { Request, Response } from 'express';
 import Post from '../models/Post';
 import { AuthRequest } from '../interfaces';
 
+/**
+ * Post Controller
+ * Handles blog post CRUD operations and search functionality
+ */
+
+/**
+ * Create a new blog post
+ * @param {AuthRequest} req - Express request object with post data and authenticated user
+ * @param {Response} res - Express response object
+ * @returns {Promise<Response>} JSON response with created post data
+ */
 export const createPost = async (req: AuthRequest, res: Response) => {
   try {
     const post = new Post({
@@ -15,6 +26,12 @@ export const createPost = async (req: AuthRequest, res: Response) => {
   }
 };
 
+/**
+ * Get all blog posts with optional pagination
+ * @param {AuthRequest} req - Express request object with optional query parameters
+ * @param {Response} res - Express response object
+ * @returns {Promise<Response>} JSON response with array of posts and pagination data
+ */
 export const getPosts = async (req: AuthRequest, res: Response) => {
   try {
     const posts = await Post.find()
@@ -26,6 +43,12 @@ export const getPosts = async (req: AuthRequest, res: Response) => {
   }
 };
 
+/**
+ * Get a single blog post by ID
+ * @param {AuthRequest} req - Express request object with post ID parameter
+ * @param {Response} res - Express response object
+ * @returns {Promise<Response>} JSON response with post data or not found error
+ */
 export const getPost = async (req: AuthRequest, res: Response) => {
   try {
     const post = await Post.findById(req.params.id)
@@ -43,6 +66,13 @@ export const getPost = async (req: AuthRequest, res: Response) => {
   }
 };
 
+/**
+ * Update a blog post
+ * @param {AuthRequest} req - Express request object with post ID and update data
+ * @param {Response} res - Express response object
+ * @returns {Promise<Response>} JSON response with updated post data
+ * @throws {Error} When post not found or user not authorized
+ */
 export const updatePost = async (req: AuthRequest, res: Response) => {
   try {
     const post = await Post.findOne({
@@ -62,6 +92,13 @@ export const updatePost = async (req: AuthRequest, res: Response) => {
   }
 };
 
+/**
+ * Delete a blog post
+ * @param {AuthRequest} req - Express request object with post ID
+ * @param {Response} res - Express response object
+ * @returns {Promise<Response>} JSON response with deletion confirmation
+ * @throws {Error} When post not found or user not authorized
+ */
 export const deletePost = async (req: AuthRequest, res: Response) => {
   try {
     const post = await Post.findOneAndDelete({
@@ -79,6 +116,12 @@ export const deletePost = async (req: AuthRequest, res: Response) => {
   }
 };
 
+/**
+ * Search posts by title or content
+ * @param {AuthRequest} req - Express request object with search query
+ * @param {Response} res - Express response object
+ * @returns {Promise<Response>} JSON response with matching posts
+ */
 export const searchPosts = async (req: AuthRequest, res: Response) => {
   try {
     const { query } = req.query;

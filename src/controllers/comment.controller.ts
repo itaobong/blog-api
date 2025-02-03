@@ -4,6 +4,18 @@ import Post from '../models/Post';
 import { AuthRequest, IComment } from '../interfaces';
 import { Types } from 'mongoose';
 
+/**
+ * Comment Controller
+ * Handles blog post comments CRUD operations
+ */
+
+/**
+ * Add a comment to a blog post
+ * @param {AuthRequest} req - Express request object with comment data and authenticated user
+ * @param {Response} res - Express response object
+ * @returns {Promise<Response>} JSON response with created comment data
+ * @throws {Error} When post not found
+ */
 export const addComment = async (req: AuthRequest, res: Response) => {
   try {
     const post = await Post.findById(req.params.postId);
@@ -29,6 +41,12 @@ export const addComment = async (req: AuthRequest, res: Response) => {
   }
 };
 
+/**
+ * Get all comments for a blog post
+ * @param {Request} req - Express request object with post ID
+ * @param {Response} res - Express response object
+ * @returns {Promise<Response>} JSON response with array of comments
+ */
 export const getComments = async (req: Request, res: Response) => {
   try {
     const comments = await Comment.find({ post: new Types.ObjectId(req.params.postId) })
@@ -40,6 +58,13 @@ export const getComments = async (req: Request, res: Response) => {
   }
 };
 
+/**
+ * Update a comment
+ * @param {AuthRequest} req - Express request object with comment ID and update data
+ * @param {Response} res - Express response object
+ * @returns {Promise<Response>} JSON response with updated comment data
+ * @throws {Error} When comment not found or user not authorized
+ */
 export const updateComment = async (req: AuthRequest, res: Response) => {
   try {
     const comment = await Comment.findOne({
@@ -59,6 +84,13 @@ export const updateComment = async (req: AuthRequest, res: Response) => {
   }
 };
 
+/**
+ * Delete a comment
+ * @param {AuthRequest} req - Express request object with comment ID
+ * @param {Response} res - Express response object
+ * @returns {Promise<Response>} JSON response with deletion confirmation
+ * @throws {Error} When comment not found or user not authorized
+ */
 export const deleteComment = async (req: AuthRequest, res: Response) => {
   try {
     const comment = await Comment.findOne({
