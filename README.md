@@ -286,7 +286,7 @@ npm test
 You can test the API endpoints using Postman. Here's how to get started:
 
 1. Download and install [Postman](https://www.postman.com/downloads/)
-2. Import the provided Postman collection (if available) or create a new collection
+2. Create a new collection
 3. Set up environment variables in Postman:
    - `BASE_URL`: `http://localhost:3000/api`
    - `TOKEN`: Your JWT token after login
